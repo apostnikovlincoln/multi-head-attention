@@ -9,7 +9,7 @@ embeddings = {
     "gene3": np.array([1])
 }
 
-# creating matrices for transforming the embeddings into Q, K, and V vectors
+# Creating matrices for transforming the embeddings into Q, K, and V vectors
 W_q = W_k = W_v = np.array([[1]])
 
 # Three sequences
@@ -45,5 +45,5 @@ attention_sequence3 = calculate_attention(sequence3, embeddings, W_q, W_k, W_v)
 
 print("Attention for first sequence:", attention_sequence1)
 print("Attention for second sequence:", attention_sequence2)
-
 print("Attention for third sequence:", attention_sequence3)
+
