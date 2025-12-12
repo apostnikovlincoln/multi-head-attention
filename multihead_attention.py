@@ -137,7 +137,7 @@ class Transformer(nn.Module):
         source_mask, target_mask = self.generate_mask(source, target)
         
         
-        #positional enocding:
+        #positional encoding:
         #source_embedded = self.dropout(self.positional_encoding(self.encoder_embedding(source)))
         #target_embedded = self.dropout(self.positional_encoding(self.decoder_embedding(target)))
         
@@ -185,4 +185,5 @@ for epoch in range(3):
     loss.backward()
     optimizer.step()
     print(f"Epoch: {epoch+1}, Loss: {loss.item()}")
+
 
