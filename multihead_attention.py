@@ -74,6 +74,7 @@ class PositionalEncoding(nn.Module):
         
     def forward(self, x):
         return x + self.pe[:, :x.size(1)]
+    
 
 class EncoderLayer(nn.Module):
     def __init__(self, d_model, num_heads, d_ff, dropout):
@@ -134,8 +135,15 @@ class Transformer(nn.Module):
 
     def forward(self, source, target):
         source_mask, target_mask = self.generate_mask(source, target)
-        source_embedded = self.dropout(self.positional_encoding(self.encoder_embedding(source)))
-        target_embedded = self.dropout(self.positional_encoding(self.decoder_embedding(target)))
+        
+        
+        #positional enocding:
+        #source_embedded = self.dropout(self.positional_encoding(self.encoder_embedding(source)))
+        #target_embedded = self.dropout(self.positional_encoding(self.decoder_embedding(target)))
+        
+        #no positional encoding:
+        source_embedded = self.encoder_embedding(source)
+        target_embedded = self.decoder_embedding(target)
 
         encoder_output = source_embedded
         for encoder_layer in self.encoder_layers:
@@ -170,7 +178,7 @@ optimizer = optim.Adam(transformer.parameters(), lr=0.0001, betas=(0.9, 0.98), e
 
 transformer.train()
 
-for epoch in range(10):
+for epoch in range(3):
     optimizer.zero_grad()
     output = transformer(source_data, target_data[:, :-1])
     loss = criterion(output.contiguous().view(-1, target_vocab_size), target_data[:, 1:].contiguous().view(-1))
